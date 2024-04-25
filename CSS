@@ -1,0 +1,95 @@
+import { useState, useEffect } from "react";
+import { Container, Box, Flex, Heading, Text, Button, Image } from "@chakra-ui/react";
+
+export default function Home() {
+  const [sipServerStatus, setSipServerStatus] = useState("offline");
+  const [voipServicesStatus, setVoipServicesStatus] = useState("offline");
+  const [sipTrunksStatus, setSipTrunksStatus] = useState("offline");
+  const [virtualNumbersStatus, setVirtualNumbersStatus] = useState("offline");
+  const [callerIdRegistrationStatus, setCallerIdRegistrationStatus] = useState("offline");
+  const [cloudHostingStatus, setCloudHostingStatus] = useState("offline");
+  const [callCenterSystemStatus, setCallCenterSystemStatus] = useState("offline");
+
+  useEffect(() => {
+    // Initialize SIP server
+    fetch("/api/init-sip-server")
+      .then((response) => response.json())
+      .then((data) => setSipServerStatus(data.status));
+
+    // Initialize VoIP services
+    fetch("/api/init-voip-services")
+      .then((response) => response.json())
+      .then((data) => setVoipServicesStatus(data.status));
+
+    // Initialize SIP trunks
+    fetch("/api/init-sip-trunks")
+      .then((response) => response.json())
+      .then((data) => setSipTrunksStatus(data.status));
+
+    // Initialize virtual numbers
+    fetch("/api/init-virtual-numbers")
+      .then((response) => response.json())
+      .then((data) => setVirtualNumbersStatus(data.status));
+
+    // Initialize caller ID registration
+    fetch("/api/init-caller-id-registration")
+      .then((response) => response.json())
+      .then((data) => setCallerIdRegistrationStatus(data.status));
+
+    // Initialize cloud hosting
+    fetch("/api/init-cloud-hosting")
+      .then((response) => response.json())
+      .then((data) => setCloudHostingStatus(data.status));
+
+    // Initialize call center system
+    fetch("/api/init-call-center-system")
+      .then((response) => response.json())
+      .then((data) => setCallCenterSystemStatus(data.status));
+  }, []);
+
+  return (
+    <Container maxW="container.lg" p={4}>
+      <Heading as="h1" size="lg" mb={4}>
+        Communication System
+      </Heading>
+      <Flex justify="space-between" mb={4}>
+        <Box>
+          <Text>SIP Server:</Text>
+          <Text>{sipServerStatus}</Text>
+        </Box>
+        <Box>
+          <Text>VoIP Services:</Text>
+          <Text>{voipServicesStatus}</Text>
+        </Box>
+        <Box>
+          <Text>SIP Trunks:</Text>
+          <Text>{sipTrunksStatus}</Text>
+        </Box>
+      </Flex>
+      <Flex justify="space-between" mb={4}>
+        <Box>
+          <Text>Virtual Numbers:</Text>
+          <Text>{virtualNumbersStatus}</Text>
+        </Box>
+        <Box>
+          <Text>Caller ID Registration:</Text>
+          <Text>{callerIdRegistrationStatus}</Text>
+        </Box>
+        <Box>
+          <Text>Cloud Hosting:</Text>
+          <Text>{cloudHostingStatus}</Text>
+        </Box>
+      </Flex>
+      <Flex justify="space-between" mb={4}>
+        <Box>
+          <Text>Call Center System:</Text>
+          <Text>{callCenterSystemStatus}</Text>
+        </Box>
+      </Flex>
+      <Button colorScheme="blue" onClick={() => console.log("Button clicked!")}>
+        Initialize System
+      </Button>
+      <Image src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxjb21tdW5pY2F0aW9uJTIwc3lzdGVtfGVufDB8fHx8MTcxNDA2NzE3N3ww&ixlib=rb-4.0.3&q=80&w=1080" />
+    </Container>
+  );
+}
